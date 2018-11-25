@@ -11,3 +11,9 @@ def home(request):
     return {'title': "Home"}
 
 
+@view_config(route_name='list_users', renderer='../templates/users.jinja2')
+def list_users(request):
+    users = request.dbsession.query(User)
+
+    return {'users': users}
+
