@@ -1,0 +1,3 @@
+[run]
+source = vue_auth_component
+omit = vue_auth_component/test*
