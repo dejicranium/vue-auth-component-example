@@ -261,25 +261,6 @@
                 return true;
             },
 
-            usernameAndEmailAvailable(){
-                this.username = this.username.trim();
-                this.email = this.email.trim();
-
-                vm = this;
-
-                axios.post('http://localhost:6543/verify_username_and_email', {
-                    email: vm.email, 
-                    username: vm.username,
-                }).then(response=>{
-                    if (response.data['status'] ==  "error"){
-                        return [false, response.data.errorText];
-                    }
-
-                    else{
-                        return [true, ''];
-                    }
-                });
-            },
 
 
             validateDetails(){
@@ -310,7 +291,7 @@
                     this.email = this.email.trim();
 
                     vm = this;
-                    axios.post('http://localhost:6543/verify_username_and_email', {
+                    axios.post("{{request.route_url('verify_username_and_email')}}", {
                         email: vm.email, 
                         username: vm.username,
                     }).then(response=>{
@@ -334,7 +315,7 @@
             finalizeRegistration(){
                 vm = this; 
                 
-                axios.post('http://localhost:6543/register', {
+                axios.post("{{request.route_url('register')}}", {
                     firstName: vm.firstName,
                     lastName: vm.lastName, 
                     email: vm.email, 
