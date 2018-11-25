@@ -321,6 +321,8 @@
                     email: vm.email, 
                     username: vm.username,
                     password: vm.password, 
+                }).then(response=>{
+                    window.open(siteUrl+'users', '_self');
                 });
             },
 
