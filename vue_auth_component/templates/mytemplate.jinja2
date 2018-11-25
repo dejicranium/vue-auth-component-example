@@ -202,7 +202,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
 
     <script>
-    
+    var siteUrl = 'https://stark-everglades-24492.herokuapp.com/'
     Vue.component('auth-modal', {
 
        template: '#modal-template',
@@ -291,7 +291,7 @@
                     this.email = this.email.trim();
 
                     vm = this;
-                    axios.post("{{request.route_url('verify_username_and_email')}}", {
+                    axios.post(siteUrl + 'verify_username_and_email' , {
                         email: vm.email, 
                         username: vm.username,
                     }).then(response=>{
@@ -315,7 +315,7 @@
             finalizeRegistration(){
                 vm = this; 
                 
-                axios.post("{{request.route_url('register')}}", {
+                axios.post(siteUrl + "register", {
                     firstName: vm.firstName,
                     lastName: vm.lastName, 
                     email: vm.email, 

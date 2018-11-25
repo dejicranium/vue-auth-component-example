@@ -1,5 +1,6 @@
 from pyramid.view import view_config
 from ..models import User
+from pyramid.httpexceptions import HTTPFound
 
 
 @view_config(route_name='verify_username_and_email', renderer='json')
@@ -57,7 +58,9 @@ def register(request):
     except Exception as e:
         return {"status": e}
 
-    
+    else:
+        return HTTPFound(location=request.route_url('list_users'))
+
 
     
 
