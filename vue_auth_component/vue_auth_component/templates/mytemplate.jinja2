@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>   
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+ 
+        <style>
+            body{
+                background-color:whitesmoke;
+                position: relative;
+            }
+            
+            .errorText{
+                color: red;
+            }
+            .btn-large{
+                color: white;
+                font-style:bold;
+                font-size: 20px;
+            }
+            .to-center{
+                text-align: center;
+            }
+
+            .bottom-text{
+                position:fixed;
+                bottom:0;
+
+                text-align: center;
+            }
+
+            #demo-instruction{
+                color:darkgrey;
+            }
+
+            .modal-mask{
+                position: fixed;
+                z-index: 100; 
+                top: 0; 
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, .5);
+                transition: opacity .3s ease;
+                overflow-y:auto;
+            
+            }
+
+            .modal-container {
+                max-width: 80%;
+                min-width: 70%;
+                margin: 50px auto 0;
+                position:relative;
+                background-color: #fff;
+                border-radius: 2px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+                transition: all .3s ease;
+                box-sizing: border-box;
+                padding-bottom: 40px; 
+            }
+
+            .card-content{
+                margin-top: 20px;
+            }
+            .form-btn{
+                position: absolute; 
+                bottom: 0;
+                right: 0;
+                margin-right: 20px; 
+                margin-bottom: 20px;
+            }
+
+
+
+
+        </style>
+    </head>
+
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col s12 to-center">
+                    <h4>Sample authentication component made with Vue.js</h4>
+                </div>
+            </div>
+
+          <div class="row">
+
+                <div class="col s12 to-center">
+                    <img src="https://media.giphy.com/media/229Ozo6sMl3K69NgwE/giphy.gif" style='border-radius:20px;height:150px; width:150px;'/>
+                </div>  
+
+            
+
+            </div>
+            <div class='row'>
+                <div class='col s12 to-center'>
+                    <a class="waves-effect waves-light btn-large teal" @click='actShowAuthenticationModal'>View Demo</a>
+                </div>
+            </div>
+
+
+
+            <div class='row'>
+                <div class='col s12 l12 to-center'>
+                    <p>Handcrafted with <span style="color: #e25555;">&#9829;</span> by Deji Atoyebi. View code <a href='https://github.com/dejicranium/vue-auth-component-example'>here</a> </p>
+                </div>
+            </div> 
+
+            <auth-modal :show_authentication_modal='showAuthenticationModal'></auth-modal>
+
+
+            <template id="modal-template">
+                <transition name="modal">
+                    <div class="modal-mask" v-if='showAuthenticationModal'>
+                        <div class="modal-container" v-on:click.stop>
+                            <div class="card-tabs">
+                                <ul class="tabs tabs-fixed-width">
+                                    <li class="tab"><a :class="[intent=='login'? 'active': '']" href="#" @click="changeIntent('login')">Sign in</a></li>
+                                    <li class="tab"><a class="[intent=='registers'? 'active': '']" href="#" @click="changeIntent('register')">Register</a></li>
+                                    
+                                </ul>
+
+                                <div class='card-content'>
+                                    <div v-if="intent=='login'">
+                                        <div class="row">
+                                            <p class="errorText" style='margin-left: 10px;'>((loginErrorText))<p>
+
+                                            <form class="col s12">
+                                                <div class="row">
+                                                    <div class="input-field col s12">
+                                                        <input v-model='email'
+                                                                placeholder="" id="email_address" type="text" class="">
+                                                        <label for="email_address">Email Address</label>
+                                                    </div>
+                                                    <div class="input-field col s12 ">
+                                                        <input v-model='password' id="password" type="text" class="">
+                                                        <label for="password">Password</label>
+                                                    </div>
+
+                                            </form>
+                                                <a class="waves-effect waves-light btn form-btn teal" @click='actShowAuthenticationModal'>Sign in</a>
+
+                                        </div>
+    
+                                    </div>
+
+
+                                    <div v-if="intent=='register'">
+                                        <div class="row">
+                                            <form class="col s12">
+                                                <div class="row">
+                                                    <p class="errorText" style='margin-left: 10px;'>((registrationErrorText))</p>
+                                                    <div class="input-field col s6">
+                                                        <input v-model='firstName'
+                                                                placeholder="" id="first_name" type="text" class="">
+                                                        <label for="first_name">First Name</label>
+                                                    </div>
+                                                    <div class="input-field col s6">
+                                                        <input v-model='lastName' id="last_name" type="text" class="">
+                                                        <label for="last_name">Last Name</label>
+                                                    </div>
+
+                                                    <div class="input-field col s12">
+                                                        <input v-model="username" id="username" type="text" class="">
+                                                        <label for="username">Username</label>
+                                                    </div>
+
+                                                    <div class="input-field col s12">
+                                                        <input v-model="email" id="email_address" type="text" class="">
+                                                        <label for="email_address">Email address</label>
+                                                    </div>
+
+
+                                                    <div class="input-field col s12">
+                                                        <input v-model="password" id="password" type="password" class="">
+                                                        <label for="password">Password</label>
+                                                    </div>
+                                                    
+                                                    <a class="waves-effect waves-light btn teal form-btn" @click='validateDetails'>Proceed</a>
+
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </transition>
+            </template>
+            
+        </div>
+    </body>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+
+    <script>
+    
+    Vue.component('auth-modal', {
+
+       template: '#modal-template',
+       props: ['show_authentication_modal'],
+
+    });
+
+
+    new Vue({
+        el: '.container',
+        delimiters: ['((', '))'],
+        data(){
+            return{
+                email: '', 
+                firstName: '', 
+                lastName: '', 
+                username: '',
+                password: '', 
+                loginError: '',
+                registrationErrorText: '',
+                showAuthenticationModal: false,
+                intent: 'login',
+
+            }
+        },
+        
+
+        methods: {
+
+            allFieldsFilled(){
+                if (this.email == '' || this.firstName == '' || this.lastName == '' || this.username == '' || this.password == ''){
+                    return false; 
+                }
+
+                return true;
+            },
+
+            usernameIsEligible(){
+                if (this.username.length  < 3){
+                    return false;
+                }
+
+                return true;
+            },
+
+            emailIsEligible(){
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(String(this.email).toLowerCase());
+            },
+
+            passwordIsEligible(){
+                if (this.password.length < 8){
+                    return false;
+                }
+
+                return true;
+            },
+
+            usernameAndEmailAvailable(){
+                this.username = this.username.trim();
+                this.email = this.email.trim();
+
+                vm = this;
+
+                axios.post('http://localhost:6543/verify_username_and_email', {
+                    email: vm.email, 
+                    username: vm.username,
+                }).then(response=>{
+                    if (response.data['status'] ==  "error"){
+                        return [false, response.data.errorText];
+                    }
+
+                    else{
+                        return [true, ''];
+                    }
+                });
+            },
+
+
+            validateDetails(){
+
+                var errorExists = true;
+                vm = this;
+
+                //first check whether all fields have been filled
+                if (!this.allFieldsFilled()){
+                    this.registrationErrorText = "Please complete all fields";
+                
+                    
+                }
+                else if (!this.usernameIsEligible()){
+                    this.registrationErrorText = "Username must be more than 2 characters";
+                    
+                }
+                else if (!this.emailIsEligible()){
+                    this.registrationErrorText = "Please enter valid email";
+                }
+
+                else if (!this.passwordIsEligible()){
+                    this.registrationErrorText = "Password must be at least 8 characters";
+                }
+
+                else{
+                    this.username = this.username.trim();
+                    this.email = this.email.trim();
+
+                    vm = this;
+                    axios.post('http://localhost:6543/verify_username_and_email', {
+                        email: vm.email, 
+                        username: vm.username,
+                    }).then(response=>{
+                        if (response.data['status'] ==  "error"){
+                            this.registrationErrorText = response.data.errorText;
+                        }
+
+                        else{
+                            this.finalizeRegistration();
+                        }
+                    });
+                    
+                }
+
+              
+
+                
+                
+            },
+
+            finalizeRegistration(){
+                vm = this; 
+                
+                axios.post('http://localhost:6543/register', {
+                    firstName: vm.firstName,
+                    lastName: vm.lastName, 
+                    email: vm.email, 
+                    username: vm.username,
+                    password: vm.password, 
+                });
+            },
+
+
+
+            changeIntent(newIntent){
+                this.intent = newIntent;
+            },
+            
+            actShowAuthenticationModal(){
+                this.showAuthenticationModal = true;
+            },
+        },
+
+    });
+    
+    </script>
+</html>
