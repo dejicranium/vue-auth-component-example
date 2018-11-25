@@ -1,18 +1,31 @@
-from sqlalchemy import (
-    Column,
-    Index,
-    Integer,
-    Text,
-)
-
 from .meta import Base
+import datetime
+
+from sqlalchemy import (Table,
+    Column,
+    Integer,
+    Unicode,
+    UnicodeText,
+    DateTime,
+    Float,
+    String,
+    ForeignKey)
+from sqlalchemy.schema import UniqueConstraint
+from passlib.apps import custom_app_context
 
 
-class MyModel(Base):
-    __tablename__ = 'models'
+class User(Base):
+    __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    name = Column(Text)
-    value = Column(Integer)
+    first_name = Column(Unicode(255), nullable=False)
+    last_name = Column(Unicode(255), nullable=False)
+    email = Column(Unicode(255), nullable=False, unique = True)
+    username = Column(Unicode(255), nullable=True, unique=True)
+    password = Column(Unicode(255), nullable=False)
 
 
-Index('my_index', MyModel.name, unique=True, mysql_length=255)
+    def set_password(self, password):
+        self.password = custom_app_context.encrypt(password)
+
+        
+    
